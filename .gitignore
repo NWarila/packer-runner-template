@@ -1,0 +1,22 @@
+# Default-deny: every tracked file must be explicitly allowlisted below.
+**
+
+# Root files
+!/.editorconfig
+!/.gitattributes
+!/.gitignore
+!/.markdownlint-cli2.jsonc
+!/.template-type
+!/CODE_OF_CONDUCT.md
+!/CONTRIBUTING.md
+!/LICENSE
+!/README.md
+!/SECURITY.md
+!/SUPPORT.md
+
+# Tracked directories and their files (each tracked file must be explicitly allowlisted).
+!/.github/
+!/.github/CODEOWNERS
+!/.github/PULL_REQUEST_TEMPLATE.md
+!/.github/workflows/
+!/.github/workflows/ci.yaml
