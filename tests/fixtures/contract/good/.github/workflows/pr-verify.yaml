@@ -1,0 +1,19 @@
+name: PR Verify
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-packer-framework-build.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    with:
+      framework_repo: NWarila/packer-framework-template
+      framework_ref: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+      input_ref: cccccccccccccccccccccccccccccccccccccccc
+      mode: validate

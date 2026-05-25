@@ -1,0 +1,31 @@
+name: Drift Gate
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  org-baseline:
+    name: org-baseline / verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: NWarila/drift-gate@dddddddddddddddddddddddddddddddddddddddd
+        with:
+          source-repo: NWarila/.github
+          source-ref: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          manifest: baseline-manifest.json
+
+  runner-template:
+    name: runner-template / verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: NWarila/drift-gate@dddddddddddddddddddddddddddddddddddddddd
+        with:
+          source-repo: NWarila/packer-runner-template
+          source-ref: ffffffffffffffffffffffffffffffffffffffff
+          manifest: baseline-manifest.json

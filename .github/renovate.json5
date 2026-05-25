@@ -1,0 +1,24 @@
+{
+  // Schema for editor validation. Update only when intentionally adopting a new schema.
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  // Stub Renovate config for NWarila/packer-runner-template. The full
+  // canonical baseline (Packer plugin source-path remap, custom managers
+  // for renovate-annotated SHA pins, per-stack scheduling, dependency
+  // dashboard, etc.) is authored in a subsequent PR (P5). This file
+  // exists so the template self-validation contract passes; Renovate
+  // itself can also already use it as-is.
+
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)"
+  ],
+
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 5,
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict"
+}

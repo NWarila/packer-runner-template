@@ -1,0 +1,40 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  merge_group:
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  iac:
+    name: IaC and secret scan
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-iac-security.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+  codeql:
+    name: CodeQL
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-codeql.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+  scorecard:
+    name: OpenSSF Scorecard
+    if: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' }}
+    permissions:
+      security-events: write
+      id-token: write
+      actions: read
+      contents: read
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-scorecard.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
