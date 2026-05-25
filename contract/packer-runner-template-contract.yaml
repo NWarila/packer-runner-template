@@ -1,0 +1,185 @@
+# Packer Runner Template Contract
+#
+# Machine-readable manifest for packer-runner repos consuming
+# NWarila/packer-runner-template, plus the template repo's own
+# self-validation shape (`template`). The universal section is local to
+# this contract and applies to both supported shapes.
+#
+# Rule philosophy:
+#   - Every required path maps to a load-bearing operational concern.
+#   - Every regex check enforces an invariant that, if violated, would
+#     degrade reproducibility, security, or release integrity.
+#   - Exceptions require an ADR or a documented rationale on the
+#     consuming PR.
+
+version: '2'
+universal:
+  required_root_files:
+  - path: README.md
+    rationale: Entry point; must describe usage and quality controls.
+  - path: LICENSE
+    rationale: Repository license is non-optional.
+  - path: CODE_OF_CONDUCT.md
+    rationale: Local mirror of the org-owned code of conduct; drift-gated against NWarila/.github.
+  - path: CONTRIBUTING.md
+    rationale: Local mirror of the org-owned contribution guide; drift-gated against NWarila/.github.
+  - path: SECURITY.md
+    rationale: Local mirror of the org-owned security policy; drift-gated against NWarila/.github.
+  - path: SUPPORT.md
+    rationale: Local mirror of the org-owned support policy; drift-gated against NWarila/.github.
+  - path: .editorconfig
+    rationale: Baseline editor consistency.
+  - path: .gitignore
+    rationale: Excludes local state, credentials, caches, and build artifacts (deny-all per ADR-0003).
+  - path: .gitattributes
+    rationale: Repository text handling.
+  - path: .markdownlint-cli2.jsonc
+    rationale: Markdown lint configuration.
+  required_github_files:
+  - path: .github/CODEOWNERS
+    rationale: Ownership for high-risk paths.
+  - path: .github/PULL_REQUEST_TEMPLATE.md
+    rationale: Risk evidence and validation checklist.
+  - path: .github/renovate.json5
+    rationale: Dependency update policy aligned with org baseline.
+  - path: .github/workflows/packer.yaml
+    applies_to: [runner]
+    rationale: Calls the reusable Packer framework build workflow.
+  - path: .github/workflows/pr-verify.yaml
+    applies_to: [runner]
+    rationale: Calls the reusable Packer framework validation workflow in plan-only mode for PRs.
+  - path: .github/workflows/drift-gate.yaml
+    rationale: 'Calls NWarila/drift-gate as a SHA-pinned composite action. Verifies the
+      consumer mirrors the org-baseline files (and the type-template baseline files,
+      when applicable) byte-identically against canonical.'
+  - path: .github/workflows/security.yaml
+    applies_to: [runner]
+    rationale: Calls the combined reusable security surface (IaC, CodeQL, Scorecard).
+  required_documentation:
+  - path: docs/README.md
+  - path: docs/decision-records/
+    type: directory
+types:
+  runner:
+    rationale: "Data-only Packer consumer. Owns runner inventory under packer/repos\nand\
+      \ consumes a pinned framework at runtime. Its local tree intentionally\nstays\
+      \ thin: no template-maintainer tools, local contract harness, OPA policy\nsuite,\
+      \ or integration fixture is required in runner repos. PR validation\nmust check\
+      \ out the framework at framework_ref, overlay the runner's inventory\ninto the\
+      \ framework's packer/repos/ runtime path, and run the framework\nquality gate\
+      \ against the assembled tree.\n"
+    required_paths:
+    - path: packer/repos/
+      rationale: 'Consumer-owned Packer inventory overlaid onto the framework at deploy time.
+
+        Directory must exist even if currently empty (use a .gitkeep).
+
+        '
+      type: directory
+    - path: packer/fixtures/runtime/
+      rationale: 'Public-safe runtime fixtures used by pr-verify when production runner
+
+        inputs are sourced from a release pin or external service that CI
+
+        cannot reach. Required so PR validation has deterministic input on
+
+        every run.
+
+        '
+      type: directory
+    - path: tests/fixtures/
+      rationale: 'Public-safe input fixtures for contract or end-to-end tests.
+
+        '
+      type: directory
+    content_rules:
+    - file: .github/workflows/pr-verify.yaml
+      pattern: '(?m)^\s*pull_request:\s*$'
+      must_match: true
+      rationale: PR validation must run automatically on pull requests, not only by manual dispatch.
+    - file: .github/workflows/drift-gate.yaml
+      pattern: '(?m)^\s*source-repo:\s*NWarila/\.github\s*$'
+      must_match: true
+      rationale: Runner drift gates must verify org-baseline mirrors from NWarila/.github.
+    - file: .github/workflows/drift-gate.yaml
+      pattern: '(?m)^\s*source-repo:\s*NWarila/packer-runner-template\s*$'
+      must_match: true
+      rationale: Runner drift gates must verify the Packer runner template baseline.
+    - file: .github/renovate.json5
+      pattern: 'github>NWarila/packer-runner-template//\.github/renovate\.json5'
+      must_match: true
+      rationale: Runner Renovate configs must inherit the Packer runner template baseline by explicit preset file path.
+    - file: .github/renovate.json5
+      pattern: 'github>NWarila/\.github'
+      must_match: false
+      rationale: The org repo holds ADRs and policies, not a shared Renovate baseline.
+    - file: .github/workflows/packer.yaml
+      pattern: '(?:NWarila|nwarila-platform)/[A-Za-z0-9_.-]+/.github/workflows/reusable-packer-framework-build\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: Build callers must delegate to an approved SHA-pinned framework reusable build workflow.
+    - file: .github/workflows/pr-verify.yaml
+      pattern: '(?:NWarila|nwarila-platform)/[A-Za-z0-9_.-]+/.github/workflows/reusable-packer-framework-build\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: PR-verify callers must delegate to the same SHA-pinned framework reusable used by build.
+    - file: .github/workflows/security.yaml
+      pattern: 'NWarila/packer-runner-template/.github/workflows/reusable-iac-security\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: Runner security callers must consume the template-owned IaC reusable by immutable SHA.
+    - file: .github/workflows/security.yaml
+      pattern: 'NWarila/packer-runner-template/.github/workflows/reusable-codeql\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: Runner security callers must consume the template-owned CodeQL reusable by immutable SHA.
+    - file: .github/workflows/security.yaml
+      pattern: 'NWarila/packer-runner-template/.github/workflows/reusable-scorecard\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: Runner security callers must consume the template-owned Scorecard reusable by immutable SHA.
+    - file: .github/workflows/security.yaml
+      pattern: '\./\.github/workflows/reusable-(iac-security|codeql|scorecard)\.yaml'
+      must_match: false
+      rationale: Runner repos must not hide security implementation in local reusable workflow copies.
+    forbidden_paths:
+    - path: tools/
+      rationale: Runner repos are data-only; template-maintainer tooling belongs in packer-runner-template.
+    - path: policies/
+      rationale: Runner repos do not own local OPA policy suites; validation policy belongs in the template/framework layer.
+    - path: Makefile
+      rationale: Runner repos delegate validation and build through reusable workflows instead of local make targets.
+    - path: contract/
+      rationale: Runner repos do not own their own contract; they satisfy the upstream contract defined here.
+    - glob: .github/workflows/reusable-*.yaml
+      allow:
+      - .github/workflows/reusable-auto-merge.yaml
+      rationale: 'Local reusable workflow implementations are template-owned, except
+        the privileged auto-merge reusable, which stays local so the
+        pull_request_target static analyzer can inspect the complete call graph.'
+    - glob: .github/workflows/reusable-*.yml
+      rationale: Non-auto local reusable workflow implementations are forbidden with either GitHub Actions extension.
+  template:
+    rationale: 'Self-validation shape for this type-template repository. It owns
+      reusable workflows, contract tooling, drift-gate metadata, and the seed
+      runner scaffold that downstream Packer runner consumers inherit.
+
+      The required_paths list grows across phased PRs. P3 lands the contract
+      and tooling; P4 adds the reusable Packer framework build workflow; P5
+      adds the Renovate baseline; P6 adds ADRs and Diataxis docs.'
+    required_paths:
+    - path: contract/packer-runner-template-contract.yaml
+      rationale: Machine-readable runner/template contract manifest.
+    - path: .github/workflows/ci.yaml
+      rationale: Self-validation workflow for this template repository.
+    - path: tools/check_template_contract.py
+      rationale: Contract validator used by consumers and self-CI.
+    - path: tools/run_contract_tests.py
+      rationale: Self-CI harness that runs validator fixtures and asserts pass/fail behavior.
+    - path: tests/fixtures/
+      rationale: Seed public-safe fixture directory inherited by consumers.
+      type: directory
+workflow_pinning:
+  enforce_sha_pin: true
+  allow_local_refs: true
+  allow_docker_digest: true
+  rationale: 'GitHub Actions are mutable: a tag like @v4 can be repointed by a
+    compromised maintainer. SHA pinning ensures the action that ran yesterday
+    is the action that runs today. Renovate keeps pins current.
+
+    '
