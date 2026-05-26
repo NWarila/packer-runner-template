@@ -39,6 +39,7 @@
 !/docs/explanation/
 !/docs/explanation/.gitkeep
 !/docs/explanation/architecture.md
+!/docs/explanation/cross-template-sync.md
 !/docs/explanation/testing-strategy.md
 !/docs/explanation/threat-model.md
 !/docs/reference/runner-protocol.md
