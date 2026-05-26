@@ -66,6 +66,7 @@
 !/contract/
 !/contract/packer-runner-template-contract.yaml
 !/tools/
+!/tools/check_cross_template_drift.py
 !/tools/check_template_contract.py
 !/tools/run_contract_tests.py
 
