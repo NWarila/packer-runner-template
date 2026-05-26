@@ -1,5 +1,47 @@
 {
   "version": "2",
-  "byte_identical": [],
-  "scaffold_starter": []
+  "byte_identical": [
+    {
+      "source": ".editorconfig",
+      "target": ".editorconfig"
+    },
+    {
+      "source": ".gitattributes",
+      "target": ".gitattributes"
+    },
+    {
+      "source": ".markdownlint-cli2.jsonc",
+      "target": ".markdownlint-cli2.jsonc"
+    },
+    {
+      "source": ".github/PULL_REQUEST_TEMPLATE.md",
+      "target": ".github/PULL_REQUEST_TEMPLATE.md"
+    },
+    {
+      "source": ".github/workflows/reusable-auto-merge.yaml",
+      "target": ".github/workflows/reusable-auto-merge.yaml"
+    }
+  ],
+  "scaffold_starter": [
+    {
+      "source": ".github/CODEOWNERS",
+      "target": ".github/CODEOWNERS"
+    },
+    {
+      "source": ".github/renovate.json5",
+      "target": ".github/renovate.json5"
+    },
+    {
+      "source": ".gitignore",
+      "target": ".gitignore"
+    },
+    {
+      "source": "baseline-manifest.json",
+      "target": "baseline-manifest.json"
+    },
+    {
+      "source": "contract/packer-runner-template-contract.yaml",
+      "target": "contract/packer-runner-template-contract.yaml"
+    }
+  ]
 }
