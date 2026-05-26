@@ -19,9 +19,9 @@ permissions:
 
 jobs:
   build:
-    uses: nwarila-platform/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<framework-sha>
+    uses: NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<framework-sha>
     with:
-      # renovate: depName=nwarila-platform/packer-framework-template packageName=nwarila-platform/packer-framework-template currentValue=main
+      # renovate: depName=NWarila/packer-framework-template packageName=NWarila/packer-framework-template currentValue=main
       framework_ref: <framework-sha>
       input_repo: ${{ github.repository }}
       input_ref: ${{ github.sha }}
@@ -40,9 +40,9 @@ permissions:
 
 jobs:
   verify:
-    uses: nwarila-platform/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<framework-sha>
+    uses: NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<framework-sha>
     with:
-      # renovate: depName=nwarila-platform/packer-framework-template packageName=nwarila-platform/packer-framework-template currentValue=main
+      # renovate: depName=NWarila/packer-framework-template packageName=NWarila/packer-framework-template currentValue=main
       framework_ref: <framework-sha>
       input_repo: ${{ github.repository }}
       input_ref: ${{ github.event.pull_request.head.sha }}
@@ -87,7 +87,7 @@ Runner repositories should let Renovate update `framework_ref` instead of hand-b
 
 ```yaml
 with:
-  # renovate: depName=nwarila-platform/packer-framework-template packageName=nwarila-platform/packer-framework-template currentValue=main
+  # renovate: depName=NWarila/packer-framework-template packageName=NWarila/packer-framework-template currentValue=main
   framework_ref: 0123456789abcdef0123456789abcdef01234567
 ```
 
