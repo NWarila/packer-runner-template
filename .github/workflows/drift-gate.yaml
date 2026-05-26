@@ -30,6 +30,6 @@ jobs:
         with:
           source-repo: NWarila/.github
           # renovate: depName=NWarila/.github packageName=NWarila/.github currentValue=main
-          source-ref: 343a61a1c6acdf2d243a01819cd07eb954190bc1
+          source-ref: 1cb2d980657e3e56ee3efbb0381dcae5d0f04e07
           manifest: baseline-manifest.json
           check-name: org-baseline / verify
