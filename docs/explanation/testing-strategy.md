@@ -38,8 +38,8 @@ Each runner repo derived from this template gets:
 
 | Workflow | What it tests |
 |---|---|
-| `.github/workflows/pr-verify.yaml` | Calls the framework's `reusable-packer-framework-build.yaml@<sha>` in `mode: validate`. Framework checks out itself + the runner's inputs, overlays into `packer/repos/`, runs `packer init` + syntax validate + `validate-safe` + `inspect`. |
-| `.github/workflows/packer.yaml` | Same as above in `mode: build`. Adds the real `packer build`. Triggered by `push: main, paths: packer/**` and `workflow_dispatch`. |
+| `.github/workflows/pr-verify.yaml` | Calls the framework's `reusable-packer-framework-build.yaml@<sha>` with `build: false`. Framework checks out itself + the runner's inputs, overlays into `packer/repos/`, runs `packer init` + syntax validate + `validate-safe` + `inspect`. |
+| `.github/workflows/packer.yaml` | Same as above with `build: true`. Adds the real `packer build`. Triggered by `push: main, paths: packer/**` and `workflow_dispatch`. |
 | `.github/workflows/drift-gate.yaml` | Mirrors verified byte-identical against both `NWarila/.github` and `NWarila/packer-runner-template` baseline manifests. |
 | `.github/workflows/security.yaml` | This template's reusables: CodeQL, Trivy + Gitleaks + zizmor, OpenSSF Scorecard. |
 
