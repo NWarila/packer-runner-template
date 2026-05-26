@@ -38,6 +38,11 @@
 !/docs/reference/.gitkeep
 !/docs/explanation/
 !/docs/explanation/.gitkeep
+!/docs/explanation/architecture.md
+!/docs/reference/runner-protocol.md
+!/docs/reference/quality-gates.md
+!/docs/reference/mirroring.md
+!/docs/decision-records/template/0001-pin-packer-and-plugin-versions-exactly.md
 
 # Tracked directories and their files (each tracked file must be explicitly allowlisted).
 !/.github/
@@ -47,6 +52,12 @@
 !/.github/workflows/
 !/.github/workflows/ci.yaml
 !/.github/workflows/drift-gate.yaml
+!/.github/workflows/reusable-auto-merge.yaml
+!/.github/workflows/reusable-codeql.yaml
+!/.github/workflows/reusable-iac-security.yaml
+!/.github/workflows/reusable-release-evidence.yaml
+!/.github/workflows/reusable-release-please.yaml
+!/.github/workflows/reusable-scorecard.yaml
 
 # Template-maintainer contract layer.
 !/contract/
@@ -85,3 +96,23 @@
 !/tests/fixtures/contract/bad-renovate-org-baseline/
 !/tests/fixtures/contract/bad-renovate-org-baseline/.github/
 !/tests/fixtures/contract/bad-renovate-org-baseline/.github/renovate.json5
+!/tests/fixtures/contract/bad-drift-gate-missing-org-source/
+!/tests/fixtures/contract/bad-drift-gate-missing-org-source/.github/
+!/tests/fixtures/contract/bad-drift-gate-missing-org-source/.github/workflows/
+!/tests/fixtures/contract/bad-drift-gate-missing-org-source/.github/workflows/drift-gate.yaml
+!/tests/fixtures/contract/bad-drift-gate-missing-template-source/
+!/tests/fixtures/contract/bad-drift-gate-missing-template-source/.github/
+!/tests/fixtures/contract/bad-drift-gate-missing-template-source/.github/workflows/
+!/tests/fixtures/contract/bad-drift-gate-missing-template-source/.github/workflows/drift-gate.yaml
+!/tests/fixtures/contract/bad-pr-verify-manual-only/
+!/tests/fixtures/contract/bad-pr-verify-manual-only/.github/
+!/tests/fixtures/contract/bad-pr-verify-manual-only/.github/workflows/
+!/tests/fixtures/contract/bad-pr-verify-manual-only/.github/workflows/pr-verify.yaml
+!/tests/fixtures/contract/bad-local-reusable-workflow/
+!/tests/fixtures/contract/bad-local-reusable-workflow/.github/
+!/tests/fixtures/contract/bad-local-reusable-workflow/.github/workflows/
+!/tests/fixtures/contract/bad-local-reusable-workflow/.github/workflows/reusable-codeql.yaml
+!/tests/fixtures/contract/bad-security-uses-local-codeql/
+!/tests/fixtures/contract/bad-security-uses-local-codeql/.github/
+!/tests/fixtures/contract/bad-security-uses-local-codeql/.github/workflows/
+!/tests/fixtures/contract/bad-security-uses-local-codeql/.github/workflows/security.yaml

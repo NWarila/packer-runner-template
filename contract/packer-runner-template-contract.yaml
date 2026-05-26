@@ -163,10 +163,24 @@ types:
       and tooling; P4 adds the reusable Packer framework build workflow; P5
       adds the Renovate baseline; P6 adds ADRs and Diataxis docs.'
     required_paths:
+    - path: baseline-manifest.json
+      rationale: Template-tier drift-gate manifest consumed by downstream runners.
     - path: contract/packer-runner-template-contract.yaml
       rationale: Machine-readable runner/template contract manifest.
     - path: .github/workflows/ci.yaml
       rationale: Self-validation workflow for this template repository.
+    - path: .github/workflows/reusable-codeql.yaml
+      rationale: Reusable CodeQL workflow consumed by runner repos.
+    - path: .github/workflows/reusable-iac-security.yaml
+      rationale: Reusable IaC security workflow consumed by runner repos.
+    - path: .github/workflows/reusable-scorecard.yaml
+      rationale: Reusable OpenSSF Scorecard workflow consumed by runner repos.
+    - path: .github/workflows/reusable-release-please.yaml
+      rationale: Reusable release-please workflow consumed by runner repos that publish releases.
+    - path: .github/workflows/reusable-release-evidence.yaml
+      rationale: Reusable release-evidence workflow consumed by runner repos that publish releases.
+    - path: .github/workflows/reusable-auto-merge.yaml
+      rationale: Reusable trusted-bot auto-merge workflow consumed by runner repos.
     - path: tools/check_template_contract.py
       rationale: Contract validator used by consumers and self-CI.
     - path: tools/run_contract_tests.py

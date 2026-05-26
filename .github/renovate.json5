@@ -2,12 +2,23 @@
   // Schema for editor validation. Update only when intentionally adopting a new schema.
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  // Stub Renovate config for NWarila/packer-runner-template. The full
-  // canonical baseline (Packer plugin source-path remap, custom managers
-  // for renovate-annotated SHA pins, per-stack scheduling, dependency
-  // dashboard, etc.) is authored in a subsequent PR (P5). This file
-  // exists so the template self-validation contract passes; Renovate
-  // itself can also already use it as-is.
+  // Renovate config for NWarila/packer-runner-template — the canonical
+  // baseline for every Packer-runner consumer in the portfolio. This
+  // file is the single source of truth for Renovate behavior across
+  // every Packer-shaped runner repository; consumers extend it via
+  // `extends: ["github>NWarila/packer-runner-template//.github/renovate.json5"]`
+  // (see org ADR-0004 in NWarila/.github for the per-template-baseline
+  // model).
+  //
+  // Rules in this file:
+  //   - Pin third-party GitHub Actions to commit SHAs (matches the OPA
+  //     repo_hygiene package's enforcement and org ADR-0004's SHA-pin
+  //     retention check).
+  //   - Pin Packer CLI and plugin versions exactly through the Packer
+  //     custom manager (with the framework-aware source-path remap
+  //     inherited from packer-framework-template#13).
+  //   - Track explicit `# renovate:` annotations in workflow comments
+  //     for tool versions (Packer CLI, OPA, etc.).
 
   "extends": [
     "config:recommended",
@@ -20,5 +31,88 @@
   "labels": ["dependencies"],
   "prConcurrentLimit": 5,
   "minimumReleaseAge": "7 days",
-  "internalChecksFilter": "strict"
+  "internalChecksFilter": "strict",
+
+  "enabledManagers": [
+    "github-actions",
+    "pre-commit",
+    "pip_requirements",
+    "custom.regex"
+  ],
+
+  "customManagers": [
+    {
+      // Track tool versions named via `# renovate:` annotations in
+      // workflow YAML or Python tooling. The annotation declares the
+      // datasource, optional packageName, extractVersion regex, and
+      // versioning scheme; Renovate keeps the literal version current.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/.*\\.ya?ml$/",
+        "/^tools/.*\\.py$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: packageName=(?<packageName>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?\\s+\\w+(?:_VERSION)?:\\s*\"(?<currentValue>[^\"]+)\"",
+        "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: packageName=(?<packageName>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?\\s+pip install --no-cache-dir (?<depName2>[a-zA-Z0-9-._]+)==(?<currentValue>[^\\s]+)"
+      ]
+    },
+    {
+      // Packer plugin `source` paths use Packer's hosting convention
+      // (`github.com/<owner>/<short>`) which omits the `packer-plugin-`
+      // repo-name prefix. Renovate's github-releases datasource needs
+      // the real `<owner>/packer-plugin-<short>` package name to look
+      // up tags, so we capture owner + short separately and template
+      // the real name. Latest tags are `v<semver>`; strip the leading
+      // `v` for HCL match. Same shape as packer-framework-template's
+      // customManager.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^packer/.*\\.pkr\\.hcl$/",
+        "/^tests/fixtures/.*\\.pkr\\.hcl$/"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "github.com/{{owner}}/{{short}}",
+      "packageNameTemplate": "{{owner}}/packer-plugin-{{short}}",
+      "extractVersionTemplate": "^v(?<version>.*)$",
+      "matchStrings": [
+        "source\\s*=\\s*\"github\\.com/(?<owner>[^/]+)/(?<short>[^\"]+)\"\\s+version\\s*=\\s*\"=\\s*(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)\""
+      ]
+    },
+    {
+      // Track SHA body inputs that must move with reusable workflow
+      // pins and drift-gate baseline refs. Renovate's git-refs
+      // datasource treats the branch name as currentValue and the
+      // checked-in 40-char SHA as currentDigest.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/.*\\.ya?ml$/"
+      ],
+      "datasourceTemplate": "git-refs",
+      "versioningTemplate": "loose",
+      "matchStrings": [
+        "# renovate: depName=(?<depName>[^\\s]+) packageName=(?<packageName>[^\\s]+) currentValue=(?<currentValue>[^\\s]+)\\s+(?:template_ref|framework_ref|source-ref):\\s*(?<currentDigest>[0-9a-f]{40})"
+      ]
+    }
+  ],
+
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "pinDigests": true,
+      "semanticCommitType": "ci",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "matchDepNames": ["hashicorp/packer"],
+      "groupName": "Packer CLI",
+      "semanticCommitType": "deps",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "matchDepNames": ["open-policy-agent/opa"],
+      "groupName": "OPA",
+      "semanticCommitType": "deps",
+      "semanticCommitScope": "deps"
+    }
+  ]
 }

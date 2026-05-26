@@ -1,0 +1,15 @@
+name: PR Verify (bad — workflow_dispatch only; missing pull_request trigger)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-packer-framework-build.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    with:
+      framework_repo: NWarila/packer-framework-template
+      framework_ref: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+      mode: validate
