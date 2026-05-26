@@ -13,7 +13,7 @@
 It does NOT own:
 
 - An executable Packer module of its own. Runners are data-only deployers: `packer build` runs against the framework's tree with the runner's `packer/repos/` inventory overlaid onto the framework's runtime path.
-- The `reusable-packer-framework-build.yaml` workflow. That lives in [`nwarila-platform/packer-framework-template/.github/workflows/`](https://github.com/NWarila/packer-framework-template/blob/main/.github/workflows/reusable-packer-framework-build.yaml). The contract's content_rule explicitly allows either `NWarila` or `nwarila-platform` as the host org for that reusable, so framework-tier and template-tier callers both satisfy the contract.
+- The `reusable-packer-framework-build.yaml` workflow. That lives in [`NWarila/packer-framework-template/.github/workflows/`](https://github.com/NWarila/packer-framework-template/blob/main/.github/workflows/reusable-packer-framework-build.yaml). The contract's content_rule allows either `NWarila` (the template) or `nwarila-platform` (a deployed framework instance like `nwarila-platform/proxmox-packer-framework`) as the host org for that reusable, so reference and real-framework callers both satisfy the contract.
 
 ## Inputs and outputs
 
@@ -65,7 +65,8 @@ Renovate keeps the framework `uses:` SHA and the body `framework_ref` in lockste
                   │ uses: ...@<framework-sha>
                   ▼
 ┌─────────────────────────────────────────────────────┐
-│ nwarila-platform/packer-framework-template          │
+│ NWarila/packer-framework-template (reference) OR    │
+│ nwarila-platform/<name>-packer-framework (real)     │
 │   • reusable-packer-framework-build.yaml            │
 │   • packer/packer.pkr.hcl (CLI + plugin pins)       │
 │   • packer/source.pkr.hcl, builds.pkr.hcl, ...      │

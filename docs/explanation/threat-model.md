@@ -40,7 +40,7 @@ A runner consumer is a leaf node — its threat surface combines this template's
 
 ### T4 — Runner repo points its framework `uses:` at a tag instead of a SHA
 
-**Scenario:** A maintainer writes `uses: nwarila-platform/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@main`. The framework's `main` advances; a regression lands silently in the runner's next build.
+**Scenario:** A maintainer writes `uses: NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@main`. The framework's `main` advances; a regression lands silently in the runner's next build.
 
 **Mitigation:**
 

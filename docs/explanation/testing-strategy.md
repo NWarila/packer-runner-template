@@ -55,7 +55,7 @@ Each runner repo derived from this template gets:
 
 ## What's covered by the framework, not this template
 
-The Packer-build orchestration lives in `nwarila-platform/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml`. That workflow's tests (under `framework/terraform/tests/` if applicable, or under the framework's own `.github/workflows/`) cover:
+The Packer-build orchestration lives in `NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml` (the reference framework), or in a deployed framework instance such as `nwarila-platform/<name>-packer-framework`. That workflow's tests (under `framework/terraform/tests/` if applicable, or under the framework's own `.github/workflows/`) cover:
 
 - `packer init` against the pinned plugin SHAs
 - `packer validate` + `packer inspect`
