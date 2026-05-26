@@ -21,8 +21,8 @@ Each runner repo derived from this template inherits the following CI surface:
 
 | Workflow | Triggered by | What it does |
 |---|---|---|
-| `.github/workflows/pr-verify.yaml` | `pull_request` | Calls `NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<sha>` in `mode: validate`. The framework checks out itself, overlays the runner's inputs, runs `packer init` + `validate-safe` + `inspect`. |
-| `.github/workflows/packer.yaml` | `push: main, paths: packer/**` and `workflow_dispatch` | Same as above in `mode: build`. Adds the real `packer build` step and uploads manifests as a CI artifact. |
+| `.github/workflows/pr-verify.yaml` | `pull_request` | Calls `NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@<sha>` with `build: false`. The framework checks out itself, overlays the runner's inputs, runs `packer init` + `validate-safe` + `inspect`. |
+| `.github/workflows/packer.yaml` | `push: main, paths: packer/**` and `workflow_dispatch` | Same as above with `build: true`. Adds the real `packer build` step and uploads manifests as a CI artifact. |
 | `.github/workflows/drift-gate.yaml` | `pull_request` | Verifies the runner's mirrored org-baseline files (and template-baseline files) byte-match upstream `NWarila/.github@<sha>` and `NWarila/packer-runner-template@<sha>`. |
 | `.github/workflows/security.yaml` | `pull_request`, scheduled, `branch_protection_rule` | Calls this template's reusable security suite: CodeQL (Actions language), Trivy (filesystem + secrets), Gitleaks (history), zizmor (Actions injection), OpenSSF Scorecard (non-PR runs). |
 | `.github/workflows/release.yaml` (optional) | `push: main` | Calls this template's `reusable-release-please.yaml` + `reusable-release-evidence.yaml`. Only added when the runner publishes versioned releases. |

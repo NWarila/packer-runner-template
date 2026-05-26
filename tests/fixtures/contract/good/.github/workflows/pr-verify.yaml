@@ -13,7 +13,6 @@ jobs:
   verify:
     uses: NWarila/packer-framework-template/.github/workflows/reusable-packer-framework-build.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     with:
-      framework_repo: NWarila/packer-framework-template
       framework_ref: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
       input_ref: cccccccccccccccccccccccccccccccccccccccc
-      mode: validate
+      build: false

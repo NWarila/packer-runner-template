@@ -25,7 +25,7 @@ jobs:
       framework_ref: <framework-sha>
       input_repo: ${{ github.repository }}
       input_ref: ${{ github.sha }}
-      mode: build
+      build: true
     secrets: inherit
 ```
 
@@ -46,7 +46,7 @@ jobs:
       framework_ref: <framework-sha>
       input_repo: ${{ github.repository }}
       input_ref: ${{ github.event.pull_request.head.sha }}
-      mode: validate
+      build: false
 ```
 
 The `# renovate: ...` comment lets Renovate's git-refs datasource track the framework's `main` branch and propose bumps as the framework advances.
@@ -61,7 +61,7 @@ The `uses:` SHA and the body `framework_ref` MUST move together. The runner cont
 | `input_repo` | `owner/repo` | `${{ github.repository }}` | The runner repo providing inventory. |
 | `input_ref` | 40-char SHA | `${{ github.sha }}` | Required to be a SHA unless `allow_floating_input_ref: true`. |
 | `allow_floating_input_ref` | bool | `false` | Emergency escape hatch. Runner inventory is trusted input to the framework; pin with the same discipline as `framework_ref`. |
-| `mode` | `validate` \| `build` | `validate` | PR-time uses validate; main-branch push uses build. |
+| `build` | bool | `false` | When `false`, the reusable runs `packer init` + validate + inspect (PR-time validate-only). When `true`, also runs `packer build` (main-branch publish). |
 | `packer_version` | string | (framework default) | Override the framework's pinned Packer CLI version only when ADR-template/0001 allows. |
 
 ## Overlay paths
@@ -101,7 +101,7 @@ In return for the protocol-compliant call, the framework reusable:
 - Checks out `input_repo` at `input_ref`.
 - Applies `overlay_paths` (with path-traversal protection).
 - Installs the pinned Packer CLI and OPA versions per [framework ADR-template/0001](https://github.com/NWarila/packer-framework-template/blob/main/docs/decision-records/template/0001-pin-packer-and-plugin-versions-exactly.md).
-- Runs `packer init` + syntax validation + `validate-safe` + `inspect`. If `mode: build`, also runs `packer build`.
+- Runs `packer init` + syntax validation + `validate-safe` + `inspect`. If `build: true`, also runs `packer build`.
 - Uploads generated artifacts/manifests under retention rules per the framework's release evidence ADR.
 
 ## What the runner does NOT provide
