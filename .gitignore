@@ -39,6 +39,8 @@
 !/docs/explanation/
 !/docs/explanation/.gitkeep
 !/docs/explanation/architecture.md
+!/docs/explanation/testing-strategy.md
+!/docs/explanation/threat-model.md
 !/docs/reference/runner-protocol.md
 !/docs/reference/quality-gates.md
 !/docs/reference/mirroring.md
