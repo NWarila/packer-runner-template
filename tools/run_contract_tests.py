@@ -18,7 +18,8 @@ from pathlib import Path
 # of a fail line without coupling to the full message format.
 Marker = tuple[str, ...]
 
-EXPECTED_BAD_FAILURES: dict[str, tuple[Marker, ...]] = {}
+EXPECTED_BAD_FAILURES: dict[str, tuple[Marker, ...]] = {
+}
 
 EXPECTED_BAD_CONTRACT_FAILURES: dict[str, tuple[Marker, ...]] = {
     "bad-build-missing-framework-reusable": (
