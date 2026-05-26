@@ -1,0 +1,14 @@
+name: Reusable CodeQL (bad — local reusable implementation in runner)
+
+# Runner repos must NOT host non-auto reusable workflows. The contract's
+# forbidden_paths glob `.github/workflows/reusable-*.yaml` (with only
+# reusable-auto-merge.yaml allowed) rejects this.
+
+on:
+  workflow_call:
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "this should not exist in a runner repo"

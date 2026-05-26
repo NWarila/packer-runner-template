@@ -1,0 +1,38 @@
+name: Security (bad — uses local reusable-codeql.yaml instead of template-owned)
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  iac:
+    name: IaC and secret scan
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-iac-security.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+  codeql:
+    name: CodeQL
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    # This is the violation: a local reusable copy instead of the
+    # template-owned remote reusable. Contract content_rule forbids
+    # `\./\.github/workflows/reusable-(iac-security|codeql|scorecard)\.yaml`
+    # and requires the SHA-pinned template-owned form.
+    uses: ./.github/workflows/reusable-codeql.yaml
+
+  scorecard:
+    name: OpenSSF Scorecard
+    if: ${{ github.event_name != 'pull_request' }}
+    permissions:
+      security-events: write
+      id-token: write
+      actions: read
+      contents: read
+    uses: NWarila/packer-runner-template/.github/workflows/reusable-scorecard.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

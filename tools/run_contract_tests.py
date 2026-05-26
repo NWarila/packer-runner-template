@@ -24,6 +24,37 @@ EXPECTED_BAD_CONTRACT_FAILURES: dict[str, tuple[Marker, ...]] = {
     "bad-build-missing-framework-reusable": (
         ("content:.github/workflows/packer.yaml", "required pattern not found"),
     ),
+    "bad-drift-gate-missing-org-source": (
+        (
+            "content:.github/workflows/drift-gate.yaml",
+            "NWarila/\\.github",
+            "required pattern not found",
+        ),
+    ),
+    "bad-drift-gate-missing-template-source": (
+        (
+            "content:.github/workflows/drift-gate.yaml",
+            "NWarila/packer-runner-template",
+            "required pattern not found",
+        ),
+    ),
+    "bad-pr-verify-manual-only": (
+        (
+            "content:.github/workflows/pr-verify.yaml",
+            "pull_request",
+            "required pattern not found",
+        ),
+    ),
+    "bad-local-reusable-workflow": (
+        ("forbidden:.github/workflows/reusable-*.yaml", "reusable-codeql.yaml"),
+    ),
+    "bad-security-uses-local-codeql": (
+        (
+            "content:.github/workflows/security.yaml",
+            "reusable-(iac-security|codeql|scorecard)",
+            "forbidden pattern present",
+        ),
+    ),
     "bad-renovate-org-baseline": (
         (
             "content:.github/renovate.json5",
