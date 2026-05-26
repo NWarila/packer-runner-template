@@ -38,6 +38,11 @@
 !/docs/reference/.gitkeep
 !/docs/explanation/
 !/docs/explanation/.gitkeep
+!/docs/explanation/architecture.md
+!/docs/reference/runner-protocol.md
+!/docs/reference/quality-gates.md
+!/docs/reference/mirroring.md
+!/docs/decision-records/template/0001-pin-packer-and-plugin-versions-exactly.md
 
 # Tracked directories and their files (each tracked file must be explicitly allowlisted).
 !/.github/
