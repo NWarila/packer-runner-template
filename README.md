@@ -1,5 +1,9 @@
 # packer-runner-template
 
+[![CI](https://github.com/NWarila/packer-runner-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/NWarila/packer-runner-template/actions/workflows/ci.yaml)
+[![Repo Hygiene](https://github.com/NWarila/packer-runner-template/actions/workflows/repo-hygiene.yaml/badge.svg)](https://github.com/NWarila/packer-runner-template/actions/workflows/repo-hygiene.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A template for Packer repos that consume a framework: they own data (the inputs that describe what to build) but not the Packer module itself. Use it to scaffold a new Packer runner repo with CI, drift-gate, security workflows, and release evidence already wired up.
 
 The Packer runner model is intentionally thin — runners own inventory (var files, install templates, build inputs), the framework reusable owns executable build logic. The two are versioned independently and consumers pin to the framework by 40-character SHA.
