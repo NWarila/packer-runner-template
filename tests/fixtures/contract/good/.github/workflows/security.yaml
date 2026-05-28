@@ -19,7 +19,7 @@ jobs:
       contents: read
       security-events: write
       actions: read
-    uses: NWarila/packer-runner-template/.github/workflows/reusable-iac-security.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    uses: NWarila/.github/.github/workflows/reusable-iac-security.yaml@e7456b0219e8750fbef8bd70a0f1ccf7d47f1c20
 
   codeql:
     name: CodeQL
@@ -27,7 +27,7 @@ jobs:
       contents: read
       security-events: write
       actions: read
-    uses: NWarila/packer-runner-template/.github/workflows/reusable-codeql.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    uses: NWarila/.github/.github/workflows/reusable-codeql.yaml@e7456b0219e8750fbef8bd70a0f1ccf7d47f1c20
 
   scorecard:
     name: OpenSSF Scorecard
@@ -37,4 +37,4 @@ jobs:
       id-token: write
       actions: read
       contents: read
-    uses: NWarila/packer-runner-template/.github/workflows/reusable-scorecard.yaml@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    uses: NWarila/.github/.github/workflows/reusable-scorecard.yaml@e7456b0219e8750fbef8bd70a0f1ccf7d47f1c20
