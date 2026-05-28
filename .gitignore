@@ -55,12 +55,8 @@
 !/.github/workflows/
 !/.github/workflows/ci.yaml
 !/.github/workflows/drift-gate.yaml
-!/.github/workflows/reusable-auto-merge.yaml
-!/.github/workflows/reusable-codeql.yaml
-!/.github/workflows/reusable-iac-security.yaml
+!/.github/workflows/repo-hygiene.yaml
 !/.github/workflows/reusable-release-evidence.yaml
-!/.github/workflows/reusable-release-please.yaml
-!/.github/workflows/reusable-scorecard.yaml
 
 # Template-maintainer contract layer.
 !/contract/
@@ -112,6 +108,10 @@
 !/tests/fixtures/contract/bad-pr-verify-manual-only/.github/
 !/tests/fixtures/contract/bad-pr-verify-manual-only/.github/workflows/
 !/tests/fixtures/contract/bad-pr-verify-manual-only/.github/workflows/pr-verify.yaml
+!/tests/fixtures/contract/bad-repo-hygiene-uses-local/
+!/tests/fixtures/contract/bad-repo-hygiene-uses-local/.github/
+!/tests/fixtures/contract/bad-repo-hygiene-uses-local/.github/workflows/
+!/tests/fixtures/contract/bad-repo-hygiene-uses-local/.github/workflows/repo-hygiene.yaml
 !/tests/fixtures/contract/bad-local-reusable-workflow/
 !/tests/fixtures/contract/bad-local-reusable-workflow/.github/
 !/tests/fixtures/contract/bad-local-reusable-workflow/.github/workflows/

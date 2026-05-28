@@ -16,10 +16,6 @@
     {
       "source": ".github/PULL_REQUEST_TEMPLATE.md",
       "target": ".github/PULL_REQUEST_TEMPLATE.md"
-    },
-    {
-      "source": ".github/workflows/reusable-auto-merge.yaml",
-      "target": ".github/workflows/reusable-auto-merge.yaml"
     }
   ],
   "scaffold_starter": [

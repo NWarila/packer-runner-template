@@ -68,6 +68,13 @@ EXPECTED_BAD_CONTRACT_FAILURES: dict[str, tuple[Marker, ...]] = {
             "forbidden pattern present",
         ),
     ),
+    "bad-repo-hygiene-uses-local": (
+        (
+            "content:.github/workflows/repo-hygiene.yaml",
+            "reusable-repo-hygiene",
+            "required pattern not found",
+        ),
+    ),
 }
 
 
@@ -215,8 +222,6 @@ def prune_template_only_runner_paths(target: Path) -> None:
     if not workflows.is_dir():
         return
     for path in workflows.glob("reusable-*.y*ml"):
-        if path.name == "reusable-auto-merge.yaml":
-            continue
         path.unlink()
 
 
