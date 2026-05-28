@@ -4,7 +4,7 @@ A template for Packer repos that consume a framework: they own data (the inputs 
 
 The Packer runner model is intentionally thin — runners own inventory (var files, install templates, build inputs), the framework reusable owns executable build logic. The two are versioned independently and consumers pin to the framework by 40-character SHA.
 
-> **Status: scaffold in progress.** This repo's contract, reusable workflows, fixtures, and ADRs are landing across phased PRs. Once complete it will satisfy the conditions in [`packer-framework-template/docs/decision-records/template/0005-define-data-only-packer-runner-repositories.md`](https://github.com/NWarila/packer-framework-template/blob/main/docs/decision-records/template/0005-define-data-only-packer-runner-repositories.md) for deriving real Packer runner consumers.
+> Implements the data-only Packer runner pattern defined in [`packer-framework-template` ADR-0005](https://github.com/NWarila/packer-framework-template/blob/main/docs/decision-records/template/0005-define-data-only-packer-runner-repositories.md): the contract, caller workflows, drift-gate, repo-hygiene, and the contract-test fixture suite are wired up and enforced in CI.
 
 ## Architecture
 
