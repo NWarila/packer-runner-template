@@ -2,6 +2,16 @@
   "version": "2",
   "byte_identical": [
     {
+      "source": "docs/reference/mirroring.md",
+      "target": "docs/reference/mirroring.md"
+    },
+    {
+      "source": "docs/reference/runner-protocol.md",
+      "target": "docs/reference/runner-protocol.md"
+    }
+  ],
+  "scaffold_starter": [
+    {
       "source": ".editorconfig",
       "target": ".editorconfig"
     },
@@ -10,26 +20,28 @@
       "target": ".gitattributes"
     },
     {
-      "source": ".markdownlint-cli2.jsonc",
-      "target": ".markdownlint-cli2.jsonc"
+      "source": ".github/CODEOWNERS",
+      "target": ".github/CODEOWNERS"
     },
     {
       "source": ".github/PULL_REQUEST_TEMPLATE.md",
       "target": ".github/PULL_REQUEST_TEMPLATE.md"
-    }
-  ],
-  "scaffold_starter": [
-    {
-      "source": ".github/CODEOWNERS",
-      "target": ".github/CODEOWNERS"
     },
     {
       "source": ".github/renovate.json5",
       "target": ".github/renovate.json5"
     },
     {
+      "source": ".github/workflows/reusable-release-evidence.yaml",
+      "target": ".github/workflows/reusable-release-evidence.yaml"
+    },
+    {
       "source": ".gitignore",
       "target": ".gitignore"
+    },
+    {
+      "source": ".markdownlint-cli2.jsonc",
+      "target": ".markdownlint-cli2.jsonc"
     },
     {
       "source": "baseline-manifest.json",
