@@ -18,7 +18,6 @@
 !/docs/
 !/docs/README.md
 !/docs/decision-records/
-!/docs/decision-records/.gitkeep
 !/docs/decision-records/org/
 !/docs/decision-records/org/.gitkeep
 !/docs/decision-records/org/0001-use-architecture-decision-records.md
@@ -69,7 +68,6 @@
 # Contract test fixtures.
 !/tests/
 !/tests/fixtures/
-!/tests/fixtures/.gitkeep
 !/tests/fixtures/contract/
 !/tests/fixtures/contract/good/
 !/tests/fixtures/contract/good/.github/

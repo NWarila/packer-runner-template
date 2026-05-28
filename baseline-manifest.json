@@ -2,6 +2,12 @@
   "version": "2",
   "byte_identical": [
     {
+      "source": ".github/PULL_REQUEST_TEMPLATE.md",
+      "target": ".github/PULL_REQUEST_TEMPLATE.md"
+    }
+  ],
+  "scaffold_starter": [
+    {
       "source": ".editorconfig",
       "target": ".editorconfig"
     },
@@ -9,16 +15,6 @@
       "source": ".gitattributes",
       "target": ".gitattributes"
     },
-    {
-      "source": ".markdownlint-cli2.jsonc",
-      "target": ".markdownlint-cli2.jsonc"
-    },
-    {
-      "source": ".github/PULL_REQUEST_TEMPLATE.md",
-      "target": ".github/PULL_REQUEST_TEMPLATE.md"
-    }
-  ],
-  "scaffold_starter": [
     {
       "source": ".github/CODEOWNERS",
       "target": ".github/CODEOWNERS"
@@ -28,8 +24,16 @@
       "target": ".github/renovate.json5"
     },
     {
+      "source": ".github/workflows/reusable-release-evidence.yaml",
+      "target": ".github/workflows/reusable-release-evidence.yaml"
+    },
+    {
       "source": ".gitignore",
       "target": ".gitignore"
+    },
+    {
+      "source": ".markdownlint-cli2.jsonc",
+      "target": ".markdownlint-cli2.jsonc"
     },
     {
       "source": "baseline-manifest.json",
