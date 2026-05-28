@@ -2,8 +2,12 @@
   "version": "2",
   "byte_identical": [
     {
-      "source": ".github/PULL_REQUEST_TEMPLATE.md",
-      "target": ".github/PULL_REQUEST_TEMPLATE.md"
+      "source": "docs/reference/mirroring.md",
+      "target": "docs/reference/mirroring.md"
+    },
+    {
+      "source": "docs/reference/runner-protocol.md",
+      "target": "docs/reference/runner-protocol.md"
     }
   ],
   "scaffold_starter": [
@@ -18,6 +22,10 @@
     {
       "source": ".github/CODEOWNERS",
       "target": ".github/CODEOWNERS"
+    },
+    {
+      "source": ".github/PULL_REQUEST_TEMPLATE.md",
+      "target": ".github/PULL_REQUEST_TEMPLATE.md"
     },
     {
       "source": ".github/renovate.json5",
