@@ -39,7 +39,7 @@ A runner's branch-protection rules on `main` should require at minimum:
 - `IaC and secret scan / zizmor (Actions security)`
 - `CodeQL / CodeQL (actions)`
 
-Renovate-authored PRs that pass all required checks are auto-mergeable via the `reusable-auto-merge.yaml` privileged caller (which runs under `pull_request_target` and is byte-mirrored locally so the static analyzer can inspect the complete call graph).
+Renovate-authored PRs that pass all required checks are auto-mergeable by adding a thin `auto-merge.yaml` caller that `uses:` the org-owned `NWarila/.github/.github/workflows/reusable-auto-merge.yaml@<sha>` by SHA. Runner repos own **no** local reusable workflows (the contract `forbidden_paths` reject every `.github/workflows/reusable-*.yaml`), so the privileged `reusable-auto-merge.yaml` is never mirrored locally. Its `pull_request_target` safety is enforced by the org `repo_hygiene` policy via the `repo-hygiene.yaml` caller — which denies PR-head reads in that workflow — not by keeping the reusable local for static-analyzer call-graph visibility.
 
 ## How to add a new gate
 

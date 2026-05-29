@@ -30,7 +30,6 @@ Files this template authors and maintains. Downstream runner repositories adopt 
 | `.gitattributes` | byte_identical | Text/binary normalization |
 | `.markdownlint-cli2.jsonc` | byte_identical | Markdown lint config |
 | `.github/PULL_REQUEST_TEMPLATE.md` | byte_identical | Runner-shape PR template |
-| `.github/workflows/reusable-auto-merge.yaml` | byte_identical | Privileged `pull_request_target` caller; local mirror needed for static-analyzer call graph |
 | `.github/CODEOWNERS` | scaffold_starter | Default `* @NWarila`; runners may add granular owners |
 | `.github/renovate.json5` | scaffold_starter | Stub config inheriting this template's preset; runners add repo-specific package rules only |
 | `.gitignore` | scaffold_starter | Deny-all allowlist tailored to each runner's actual file set |
@@ -39,8 +38,10 @@ Files this template authors and maintains. Downstream runner repositories adopt 
 
 Reusable workflows are **not** mirrored into runner repos — they are called remotely via `uses:` and SHA-pinned. Renovate keeps those SHAs current. Runner repos own **no** local `reusable-*.yaml` (the contract `forbidden_paths` enforce this), so each reusable is called from the layer that owns it:
 
-- Security (`reusable-codeql.yaml`, `reusable-iac-security.yaml`, `reusable-scorecard.yaml`) and `reusable-release-please.yaml` are owned by [`NWarila/.github`](https://github.com/NWarila/.github).
+- Security (`reusable-codeql.yaml`, `reusable-iac-security.yaml`, `reusable-scorecard.yaml`), `reusable-release-please.yaml`, and `reusable-auto-merge.yaml` are owned by [`NWarila/.github`](https://github.com/NWarila/.github).
 - `reusable-release-evidence.yaml` is **type-specific to the Packer framework template** and is owned by [`NWarila/packer-framework-template`](https://github.com/NWarila/packer-framework-template). A runner that publishes releases calls it from there with `repo_type: runner` via the seed `release.yaml` caller — it does **not** carry a local copy. See AUDIT-2026-05-28 and [`architecture.md`](../explanation/architecture.md).
+
+`reusable-auto-merge.yaml` is not special-cased: like every other universal reusable it lives only in `NWarila/.github` and is never mirrored locally. This thin runner template ships no auto-merge file at all; a runner that wants trusted-bot auto-merge adds a thin `auto-merge.yaml` **caller** that `uses:` the org reusable by SHA. The `pull_request_target` safety property is enforced by the org `repo_hygiene` policy (run via the `repo-hygiene.yaml` caller), which denies PR-head reads in that workflow — so the reusable does **not** need to be local for static-analyzer call-graph visibility. See AUDIT-2026-05-28.
 
 ## 3. Repo-specific files (each consumer owns)
 
