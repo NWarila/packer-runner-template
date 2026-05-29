@@ -37,7 +37,10 @@ Files this template authors and maintains. Downstream runner repositories adopt 
 | `baseline-manifest.json` | scaffold_starter | Each runner declares its own mirror set |
 | `contract/packer-runner-template-contract.yaml` | scaffold_starter | Runners do NOT carry this; the template owns it and runners satisfy it via the validator |
 
-The 5 non-auto reusable workflows (`reusable-codeql.yaml`, `reusable-iac-security.yaml`, `reusable-scorecard.yaml`, `reusable-release-please.yaml`, `reusable-release-evidence.yaml`) are **not** mirrored — runner repos call them remotely via `uses:` and SHA-pin to a specific revision of this template. Renovate keeps those SHAs current.
+Reusable workflows are **not** mirrored into runner repos — they are called remotely via `uses:` and SHA-pinned. Renovate keeps those SHAs current. Runner repos own **no** local `reusable-*.yaml` (the contract `forbidden_paths` enforce this), so each reusable is called from the layer that owns it:
+
+- Security (`reusable-codeql.yaml`, `reusable-iac-security.yaml`, `reusable-scorecard.yaml`) and `reusable-release-please.yaml` are owned by [`NWarila/.github`](https://github.com/NWarila/.github).
+- `reusable-release-evidence.yaml` is **type-specific to the Packer framework template** and is owned by [`NWarila/packer-framework-template`](https://github.com/NWarila/packer-framework-template). A runner that publishes releases calls it from there with `repo_type: runner` via the seed `release.yaml` caller — it does **not** carry a local copy. See AUDIT-2026-05-28 and [`architecture.md`](../explanation/architecture.md).
 
 ## 3. Repo-specific files (each consumer owns)
 

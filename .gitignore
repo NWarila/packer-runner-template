@@ -54,8 +54,8 @@
 !/.github/workflows/
 !/.github/workflows/ci.yaml
 !/.github/workflows/drift-gate.yaml
+!/.github/workflows/release.yaml
 !/.github/workflows/repo-hygiene.yaml
-!/.github/workflows/reusable-release-evidence.yaml
 
 # Template-maintainer contract layer.
 !/contract/
