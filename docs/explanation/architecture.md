@@ -5,13 +5,14 @@
 `packer-runner-template` is the type-template for Packer-runner repos. It owns:
 
 - The contract every Packer-runner repo must satisfy ([`contract/packer-runner-template-contract.yaml`](../../contract/packer-runner-template-contract.yaml)).
-- The six stack-agnostic reusable workflows that consumer runners call by SHA — CodeQL, IaC security (Trivy + Gitleaks + zizmor), Scorecard, release-please, release-evidence, auto-merge.
+- The seed caller workflows consumer runners adopt — thin `uses:` callers, SHA-pinned, that delegate to reusables owned by other layers (security + release-please from `NWarila/.github`, the Packer build and release-evidence reusables from `NWarila/packer-framework-template`). The template owns the *callers*, not the reusables.
 - The canonical runner scaffold consumers adopt: shared dotfiles, OPA policy hooks (when added later), drift-gate layout, baseline-manifest schema.
 - The seed runner data and integration fixture that new runner repos inherit (`packer/repos/`, `packer/fixtures/runtime/`, `tests/fixtures/`).
 - The template-tier baseline manifest that every Packer-runner consumer uses to mirror standardized scaffold files and template ADRs.
 
 It does NOT own:
 
+- Any local `reusable-*.yaml`. Runner repos (and this runner template) are data-only consumers; the contract `forbidden_paths` forbid local reusable workflows. In particular `reusable-release-evidence.yaml` is **type-specific to the framework template** and lives in [`NWarila/packer-framework-template`](https://github.com/NWarila/packer-framework-template/blob/main/.github/workflows/reusable-release-evidence.yaml) — a runner that publishes releases CALLS it (with `repo_type: runner`) from the seed `release.yaml` caller rather than carrying a copy (AUDIT-2026-05-28).
 - An executable Packer module of its own. Runners are data-only deployers: `packer build` runs against the framework's tree with the runner's `packer/repos/` inventory overlaid onto the framework's runtime path.
 - The `reusable-packer-framework-build.yaml` workflow. That lives in [`NWarila/packer-framework-template/.github/workflows/`](https://github.com/NWarila/packer-framework-template/blob/main/.github/workflows/reusable-packer-framework-build.yaml). The contract's content_rule allows either `NWarila` (the template) or `nwarila-platform` (a deployed framework instance like `nwarila-platform/proxmox-packer-framework`) as the host org for that reusable, so reference and real-framework callers both satisfy the contract.
 

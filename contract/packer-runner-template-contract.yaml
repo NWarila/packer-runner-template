@@ -182,8 +182,12 @@ types:
       rationale: Self-validation workflow for this template repository.
     - path: .github/workflows/repo-hygiene.yaml
       rationale: Caller for the org reusable-repo-hygiene; enforces SHA-pinning and pull_request_target safety on this template repo.
-    - path: .github/workflows/reusable-release-evidence.yaml
-      rationale: Reusable release-evidence workflow (type-specific) consumed by runner repos that publish releases.
+    - path: .github/workflows/release.yaml
+      rationale: 'Seed release caller for runner consumers that publish versioned
+        releases. Runners own NO local reusable-*.yaml; release evidence is obtained
+        by CALLING the Packer framework template''s reusable-release-evidence.yaml by
+        SHA (repo_type=runner), and release-please from the org reusable. See
+        AUDIT-2026-05-28.'
     - path: tools/check_template_contract.py
       rationale: Contract validator used by consumers and self-CI.
     - path: tools/run_contract_tests.py
