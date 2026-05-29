@@ -142,6 +142,21 @@ types:
       pattern: '\./\.github/workflows/reusable-(iac-security|codeql|scorecard)\.yaml'
       must_match: false
       rationale: Runner repos must not hide security implementation in local reusable workflow copies.
+    - file: .github/workflows/release.yaml
+      pattern: 'NWarila/\.github/\.github/workflows/reusable-release-please\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: Runner release callers must consume the org-owned release-please reusable (NWarila/.github) by immutable SHA.
+    - file: .github/workflows/release.yaml
+      pattern: 'NWarila/packer-framework-template/\.github/workflows/reusable-release-evidence\.yaml@[0-9a-f]{40}'
+      must_match: true
+      rationale: 'Runner release callers must consume the FRAMEWORK-owned release
+        evidence reusable (NWarila/packer-framework-template) by immutable SHA
+        with repo_type=runner. release-evidence is type-specific to framework
+        templates; a runner owns no local copy. See AUDIT-2026-05-28.'
+    - file: .github/workflows/release.yaml
+      pattern: '\./\.github/workflows/reusable-release-(please|evidence)\.ya?ml'
+      must_match: false
+      rationale: Runner repos must not hide release implementation in local reusable workflow copies.
     - file: .github/workflows/repo-hygiene.yaml
       pattern: 'NWarila/\.github/\.github/workflows/reusable-repo-hygiene\.yaml@[0-9a-f]{40}'
       must_match: true

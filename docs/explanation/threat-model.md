@@ -35,7 +35,7 @@ A runner consumer is a leaf node — its threat surface combines this template's
 
 **Mitigation:**
 
-- Contract `forbidden_paths` rules reject `tools/`, `policies/`, `Makefile`, `contract/`, and the glob `.github/workflows/reusable-*.yaml` (with only `reusable-auto-merge.yaml` allowed) at PR-validation time.
+- Contract `forbidden_paths` rules reject `tools/`, `policies/`, `Makefile`, `contract/`, and the glob `.github/workflows/reusable-*.yaml` (with **no** exceptions — including `reusable-auto-merge.yaml`) at PR-validation time. Universal reusables are called by SHA from `NWarila/.github`; type-specific ones from the framework template.
 - ADR-template/0005 (from `packer-framework-template`) makes the data-only boundary explicit.
 
 ### T4 — Runner repo points its framework `uses:` at a tag instead of a SHA
@@ -72,9 +72,10 @@ A runner consumer is a leaf node — its threat surface combines this template's
 
 **Mitigation:**
 
-- `reusable-auto-merge.yaml` is the only `pull_request_target` workflow in this template. It is byte-identical with the version in `terraform-runner-template` and `packer-framework-template`, and is mirrored byte-identically in every downstream consumer so the call graph is fully visible to static analyzers.
+- This thin runner template ships **no** local `reusable-auto-merge.yaml` (or any other local reusable) — the contract `forbidden_paths` reject every `.github/workflows/reusable-*.yaml`. Trusted-bot auto-merge, when adopted, is a thin `auto-merge.yaml` **caller** that `uses:` the org-owned `reusable-auto-merge.yaml` from `NWarila/.github` by SHA. That caller is the only workflow that runs under `pull_request_target`.
+- The `pull_request_target` safety property does **not** depend on the reusable being local. It is enforced by the org `repo_hygiene` policy (run via the `repo-hygiene.yaml` caller), which denies `pull_request_target` anywhere except `auto-merge.yaml` and denies all PR-head fragments (e.g. `actions/checkout` of the PR head, `github.event.pull_request.head`, `github.head_ref`, `git checkout`, `gh pr checkout`) inside it. Because the reusable is SHA-pinned and lives in `NWarila/.github`, a consumer cannot edit the privileged logic at all.
 - zizmor runs in CI on every workflow YAML, flagging template-injection and command-injection patterns.
-- The reusable's logic gates auto-merge on the PR author being a trusted bot identity and on all required checks passing. No PR content is interpolated into shell.
+- The org reusable's logic gates auto-merge on the PR author being a trusted bot identity and on all required checks passing. It never checks out the PR head and reads only PR metadata; no PR content is interpolated into shell.
 
 ## Threats NOT addressed (out of scope)
 
