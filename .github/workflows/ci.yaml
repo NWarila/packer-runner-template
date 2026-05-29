@@ -128,8 +128,9 @@ jobs:
     # Runs ruff with --output-format sarif so Python static-analysis findings
     # flow into the consumer's GitHub Security tab alongside CodeQL, Trivy,
     # Gitleaks, zizmor, and Scorecard. continue-on-error keeps Security-tab
-    # publishing advisory; existing lint gates in verify.py remain the hard
-    # block.
+    # publishing advisory. This thin runner has no hard ruff gate (and no
+    # verify.py — that lives in the framework templates); actionlint and the
+    # contract validator are this repo's hard CI gates.
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
