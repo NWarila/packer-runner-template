@@ -26,10 +26,10 @@ Files this template authors and maintains. Downstream runner repositories adopt 
 
 | File | Category | Notes |
 |---|---|---|
-| `.editorconfig` | byte_identical | Editor consistency baseline |
-| `.gitattributes` | byte_identical | Text/binary normalization |
-| `.markdownlint-cli2.jsonc` | byte_identical | Markdown lint config |
-| `.github/PULL_REQUEST_TEMPLATE.md` | byte_identical | Runner-shape PR template |
+| `.editorconfig` | scaffold_starter | Editor consistency seed; runners may extend (a mature runner may carry richer rules) |
+| `.gitattributes` | scaffold_starter | Text/binary normalization seed; runners may add Linguist overrides |
+| `.markdownlint-cli2.jsonc` | scaffold_starter | Markdown lint seed; runners may tune |
+| `.github/PULL_REQUEST_TEMPLATE.md` | scaffold_starter | Runner-shape PR template seed; runners may customize |
 | `.github/CODEOWNERS` | scaffold_starter | Default `* @NWarila`; runners may add granular owners |
 | `.github/renovate.json5` | scaffold_starter | Stub config inheriting this template's preset; runners add repo-specific package rules only |
 | `.gitignore` | scaffold_starter | Deny-all allowlist tailored to each runner's actual file set |
