@@ -43,7 +43,7 @@ Renovate-authored PRs that pass all required checks are auto-mergeable by adding
 
 ## How to add a new gate
 
-1. Author the reusable workflow in this template under `.github/workflows/reusable-*.yaml`.
+1. Author the reusable workflow in the layer that owns it — universal gates in `NWarila/.github`, type-specific gates in the framework template (`NWarila/packer-framework-template`). Runner repos own **no** local `reusable-*.yaml` (the contract `forbidden_paths` reject them); this template adds only a thin caller that `uses:` the owning reusable by SHA.
 2. Add a `content_rule` in `contract/packer-runner-template-contract.yaml` requiring runner consumers to call it by SHA.
 3. Add the workflow to the `template` type's `required_paths` in the contract so template-mode self-validation enforces presence.
 4. Add a negative fixture under `tests/fixtures/contract/bad-<descriptor>/` that exercises the new rule.
