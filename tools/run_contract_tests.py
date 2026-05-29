@@ -75,6 +75,23 @@ EXPECTED_BAD_CONTRACT_FAILURES: dict[str, tuple[Marker, ...]] = {
             "required pattern not found",
         ),
     ),
+    "bad-release-local-reusables": (
+        (
+            "content:.github/workflows/release.yaml",
+            "reusable-release-please",
+            "required pattern not found",
+        ),
+        (
+            "content:.github/workflows/release.yaml",
+            "reusable-release-evidence",
+            "required pattern not found",
+        ),
+        (
+            "content:.github/workflows/release.yaml",
+            "reusable-release-(please|evidence)",
+            "forbidden pattern present",
+        ),
+    ),
 }
 
 
