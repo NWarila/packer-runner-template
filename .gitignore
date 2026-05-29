@@ -118,3 +118,7 @@
 !/tests/fixtures/contract/bad-security-uses-local-codeql/.github/
 !/tests/fixtures/contract/bad-security-uses-local-codeql/.github/workflows/
 !/tests/fixtures/contract/bad-security-uses-local-codeql/.github/workflows/security.yaml
+!/tests/fixtures/contract/bad-release-local-reusables/
+!/tests/fixtures/contract/bad-release-local-reusables/.github/
+!/tests/fixtures/contract/bad-release-local-reusables/.github/workflows/
+!/tests/fixtures/contract/bad-release-local-reusables/.github/workflows/release.yaml
