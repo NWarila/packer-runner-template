@@ -48,7 +48,7 @@ Renovate keeps the framework `uses:` SHA and the body `framework_ref` in lockste
 ┌─────────────────────────────────────────────────────┐
 │ NWarila/packer-runner-template (THIS REPO)          │
 │   • template ADRs (pinning, runner shape, ...)      │
-│   • 6 reusable workflows (codeql, iac-security, ...)│
+│   • no local reusables (calls org reusables by SHA) │
 │   • contract YAML + validator + harness + fixtures  │
 │   • seed scaffold for runner repos                  │
 └─────────────────┬───────────────────────────────────┘
