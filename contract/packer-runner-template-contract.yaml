@@ -145,7 +145,13 @@ types:
     - file: .github/workflows/release.yaml
       pattern: 'NWarila/\.github/\.github/workflows/reusable-release-please\.yaml@[0-9a-f]{40}'
       must_match: true
-      rationale: Runner release callers must consume the org-owned release-please reusable (NWarila/.github) by immutable SHA.
+      rationale: 'Runner release callers must consume the org-owned release-please
+        reusable (NWarila/.github) by immutable SHA. NOTE: every release.yaml
+        content rule (including the must_match:false ones below) is enforced
+        FAIL-CLOSED by check_content_rule - a missing release.yaml fails the
+        rule rather than skipping it - so release.yaml is effectively REQUIRED
+        for runner consumers (in practice, any runner that publishes releases),
+        even though it is not listed in required_github_files.'
     - file: .github/workflows/release.yaml
       pattern: 'NWarila/packer-framework-template/\.github/workflows/reusable-release-evidence\.yaml@[0-9a-f]{40}'
       must_match: true
