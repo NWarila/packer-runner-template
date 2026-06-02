@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant R as Runner repo<br/>(this template)
+    participant GH as GitHub Actions
+    participant FW as packer-framework-template<br/>(or real framework)
+    participant OPA as OPA / validate-safe
+
+    Note over R,GH: PR opened against main
+    R->>GH: pr-verify.yaml triggers on pull_request
+    GH->>FW: uses: reusable-packer-framework-build.yaml@<sha><br/>build: false
+    FW->>FW: Checkout framework at framework_ref (SHA)
+    FW->>R: Checkout input_repo at input_ref (SHA)
+    FW->>FW: Apply overlay_paths<br/>(packer/repos => packer/repos)
+    FW->>FW: packer init (verifies pinned plugin versions)
+    FW->>OPA: packer validate + validate-safe OPA policy
+    OPA-->>FW: pass / fail
+    FW-->>GH: validate-only result
+    GH-->>R: PR check result
+
+    Note over R,GH: PR merged to main
+    R->>GH: packer.yaml triggers on push to main
+    GH->>FW: uses: reusable-packer-framework-build.yaml@<sha><br/>build: true
+    FW->>FW: Checkout framework at framework_ref (SHA)
+    FW->>R: Checkout input_repo at input_ref (SHA)
+    FW->>FW: Apply overlay_paths
+    FW->>FW: packer init + validate + inspect
+    FW->>FW: packer build
+    FW->>GH: Upload artifacts and manifest<br/>(release evidence)
+    GH-->>R: Build complete
