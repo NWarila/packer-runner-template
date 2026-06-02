@@ -134,6 +134,10 @@
 !/docs/reference/ci-alignment-design-intent.md
 !/docs/reference/ci-validator-invocation.md
 !/docs/explanation/repo-type-taxonomy-and-ci-focus.md
+!/docs/diagrams/
 !/docs/diagrams/.gitkeep
+!/docs/diagrams/runner-overlay-sequence.mmd
+!/docs/how-to/derive-a-new-runner.md
+!/docs/decision-records/repo/0001-adopt-data-only-runner-shape.md
 !/docs/runbooks/.gitkeep
 !/docs/runbooks/purge-ai-attributed-history.md
